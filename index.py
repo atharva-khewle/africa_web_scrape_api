@@ -6,7 +6,12 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def hello():
-    return 'Happy Birthday bro. add /api/scrape in front of current url'
+    return 'Happy Birthday bro 🎉🎉🎉🎉🎉. go here -- >   https://web-scraping-app.vercel.app/api/scrape   it takes 30 sec too load. refresh if it doesnt work. '
+
+
+
+
+
 
 @app.route('/api/scrape', methods=['GET'])
 def scrape():
@@ -45,9 +50,16 @@ def scrape():
                 # Extract the src attribute of each image tag
                 image_links = [img_tag['src'] for img_tag in img_tags]
 
-                # Find the title tag associated with the anchor tag
-                title_tag = anchor_tag.find_next_sibling('a', class_='cell-main-photo__title')
-                title_text = title_tag.find('span', class_='cell-main-photo__size').text if title_tag else 'No title available'
+                # Find the parent div with the class 'cell-main-photo__info'
+                info_div = anchor_tag.find_parent('div', class_='cell-main-photo__info')
+
+                # Check if info_div is None before trying to find the title
+                if info_div:
+                    # Find the span with the class 'cell-main-photo__size' within the div
+                    title_span = info_div.find('span', class_='cell-main-photo__size')
+                    title_text = title_span.text if title_span else 'No Title Found'
+                else:
+                    title_text = 'No Title Found'
 
                 # Append the extracted information to the articles list
                 articles.append({
@@ -67,6 +79,11 @@ def scrape():
         return jsonify({'status': 'fail', 'message': f'Request timed out after {timeout} seconds.'})
     except requests.exceptions.RequestException as e:
         return jsonify({'status': 'fail', 'message': f'An error occurred while making the request: {e}'})
+
+
+
+
+
 
 if __name__ == '__main__':
     app.run()
