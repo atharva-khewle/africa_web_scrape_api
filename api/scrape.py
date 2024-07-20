@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def hello():
-    return 'Its Working'
+    return 'Happy Birthday bro. add /api/scrape in front of current url'
 
 @app.route('/api/scrape', methods=['GET'])
 def scrape():
