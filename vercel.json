@@ -1,16 +1,19 @@
 {
-    "version": 2,
-    "builds": [
-      {
-        "src": "api/scrape.py",
-        "use": "@vercel/python"
-      }
-    ],
-    "routes": [
-      {
-        "src": "/api/scrape",
-        "dest": "/api/scrape.py"
-      }
-    ]
-  }
-  
+  "version": 2,
+  "builds": [
+    {
+      "src": "index.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/scrape",
+      "dest": "/index.py"
+    },
+    {
+      "src": "/",
+      "dest": "/index.py"
+    }
+  ]
+}
